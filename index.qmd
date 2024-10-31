@@ -69,7 +69,7 @@ ggplotly(Arboles, tooltip = "text") |>
   config(locale = 'es') # para mostrar los controles en español
 ```
 
-## Gráfico de barras del conjunto de datos mtcars
+### Gráfico de barras del conjunto de datos mtcars
 
 #### Cantidad  de vehículos con el tipo de motor en V o líneal
 
@@ -116,9 +116,9 @@ Grafico_interactivo_tipo_motor
 Podemos denotar en los datos del gráfico, que hay una mayor proporción de vehículos con motor tipo en V que motores en línea. Se puede observar que la cantidad de vehículos con motor tipo V son 18 y en línea 14.  
 
 
-## Gráfico de pastel
+### Gráfico de pastel
 
-### Gráfico según el tipo de motor; datos de mtcars
+#### Gráfico según el tipo de motor; datos de mtcars
 
 Igualmente con la base de datos mtcars y utilizando la variable categórica de tipo de motor (motor tipo manual y motor tipo automático), se presenta el siguiente gráfico de pastel, donde al contrario del gráfico de barras este si nos muestra el número de la distribución de vehículos según su categoría de motor.
 
@@ -167,9 +167,9 @@ grafico_pastel_ggplot2
 
 ```
 
-## Histograma de cantidad de sismos por magnitud
+### Histograma de cantidad de sismos por magnitud
 
-### Datos correpondientes a "Locations of Earthquakes off Fiji"
+#### Datos correpondientes a "Locations of Earthquakes off Fiji"
 
 Para desarrollar el histograma se procedió a utilizar la base de datos “quakes” que es una base de datos de ubicación de los terremotos en Fiji que proporciona la ubicación de 1000 eventos sísmicos de Magnitud > 4,0. Los eventos ocurrieron en un cubo cerca de Fiji desde 1964.
 
@@ -209,7 +209,7 @@ En principio el histograma nos da una visión clara de la distribución, tendenc
 
 (INE, 2024)
 
-## Referencias
+### Referencias
 
 - Instituto Nacional de Estadística (INE). España.(2024). _Los tipos de gráficos estadísticos_. [https://www.ine.es/explica/docs/pasos_tipos_graficos.pdf](https://www.ine.es/explica/docs/pasos_tipos_graficos.pdf)
 
