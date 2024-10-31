@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="MCR">
+
+<title>Gráficos Interactivos</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="index_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="index_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<script src="index_files/libs/plotly-binding-4.10.4/plotly.js"></script>
+
+<script src="index_files/libs/typedarray-0.1/typedarray.min.js"></script>
+
+<script src="index_files/libs/jquery-3.5.1/jquery.min.js"></script>
+
+<link href="index_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="index_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+
+<link href="index_files/libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+
+<script src="index_files/libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+<script src="index_files/libs/plotly-locale-es-2.11.1/es.js"></script>
+
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#creación-de-gráficos-interactivos" id="toc-creación-de-gráficos-interactivos" class="nav-link active" data-scroll-target="#creación-de-gráficos-interactivos">Creación de gráficos interactivos</a>
+  <ul class="collapse">
+  <li><a href="#carga-de-librerias-necesarias-para-el-desarrollo-de-la-graficación" id="toc-carga-de-librerias-necesarias-para-el-desarrollo-de-la-graficación" class="nav-link" data-scroll-target="#carga-de-librerias-necesarias-para-el-desarrollo-de-la-graficación">Carga de librerias necesarias para el desarrollo de la graficación</a></li>
+  <li><a href="#gráfico-de-dispersón-del-conjunto-de-datos-trees" id="toc-gráfico-de-dispersón-del-conjunto-de-datos-trees" class="nav-link" data-scroll-target="#gráfico-de-dispersón-del-conjunto-de-datos-trees">Gráfico de dispersón del conjunto de datos “trees”</a></li>
+  </ul></li>
+  <li><a href="#gráfico-de-barras-del-conjunto-de-datos-mtcars" id="toc-gráfico-de-barras-del-conjunto-de-datos-mtcars" class="nav-link" data-scroll-target="#gráfico-de-barras-del-conjunto-de-datos-mtcars">Gráfico de barras del conjunto de datos mtcars</a></li>
+  <li><a href="#gráfico-de-pastel" id="toc-gráfico-de-pastel" class="nav-link" data-scroll-target="#gráfico-de-pastel">Gráfico de pastel</a>
+  <ul class="collapse">
+  <li><a href="#gráfico-según-el-tipo-de-motor-datos-de-mtcars" id="toc-gráfico-según-el-tipo-de-motor-datos-de-mtcars" class="nav-link" data-scroll-target="#gráfico-según-el-tipo-de-motor-datos-de-mtcars">Gráfico según el tipo de motor; datos de mtcars</a></li>
+  </ul></li>
+  <li><a href="#histograma-de-cantidad-de-sismos-por-magnitud" id="toc-histograma-de-cantidad-de-sismos-por-magnitud" class="nav-link" data-scroll-target="#histograma-de-cantidad-de-sismos-por-magnitud">Histograma de cantidad de sismos por magnitud</a>
+  <ul class="collapse">
+  <li><a href="#datos-correpondientes-a-locations-of-earthquakes-off-fiji" id="toc-datos-correpondientes-a-locations-of-earthquakes-off-fiji" class="nav-link" data-scroll-target="#datos-correpondientes-a-locations-of-earthquakes-off-fiji">Datos correpondientes a “Locations of Earthquakes off Fiji”</a></li>
+  <li><a href="#la-importancia-de-los-gráficos" id="toc-la-importancia-de-los-gráficos" class="nav-link" data-scroll-target="#la-importancia-de-los-gráficos">La importancia de los gráficos</a></li>
+  </ul></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Gráficos Interactivos</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>MCR </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="creación-de-gráficos-interactivos" class="level2">
+<h2 class="anchored" data-anchor-id="creación-de-gráficos-interactivos">Creación de gráficos interactivos</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://enlinea.santotomas.cl/web/wp-content/uploads/sites/2/2016/09/programar-en-r-744x465.jpg" class="img-fluid figure-img"></p>
+<figcaption>Fuente: Google</figcaption>
+</figure>
+</div>
+<hr>
+<section id="carga-de-librerias-necesarias-para-el-desarrollo-de-la-graficación" class="level3">
+<h3 class="anchored" data-anchor-id="carga-de-librerias-necesarias-para-el-desarrollo-de-la-graficación">Carga de librerias necesarias para el desarrollo de la graficación</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(hrbrthemes)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="gráfico-de-dispersón-del-conjunto-de-datos-trees" class="level3">
+<h3 class="anchored" data-anchor-id="gráfico-de-dispersón-del-conjunto-de-datos-trees">Gráfico de dispersón del conjunto de datos “trees”</h3>
+<p>Para este gráfico de dispersión se hace una relación entre las variables altura y volumen de los árboles para determinar su relación.</p>
+<p>En el gráfico se puede observar una relación donde mayor sea la altura del árbol así aumenta el volumen de madera, lo cual tiene sentido en relación con un incremento proporcional, aunque se debería conocer la especie del árbol para tener un panorama más claro, ya que con esto se tiene el tiempo de crecimiento del árbol, la densidad, el diámetro usual, etc.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Arboles <span class="ot">&lt;-</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  trees <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Height, <span class="at">y =</span> Volume, <span class="at">color =</span> Girth)) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># datos que se muestran al colocar el ratón sobre un punto</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">paste0</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Altura del Árbol : "</span>, Height, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Volumen del Árbol : "</span>, Volume, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Circunferencia: "</span>,  Girth</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> comma, <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>)) <span class="sc">+</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> comma, <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>)) <span class="sc">+</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Relación entre altura y volumen de los árboles"</span>) <span class="sc">+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Altura del Árbol"</span>) <span class="sc">+</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Volumen del Árbol"</span>) <span class="sc">+</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">"Fuentes: Atkinson, A. C. (1985) Plots, Transformations and Regression. Oxford University Press."</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Circunferencia"</span>) <span class="sc">+</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">"Altura estimada"</span>) <span class="sc">+</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_economist</span>()</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico plotly</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(Arboles, <span class="at">tooltip =</span> <span class="st">"text"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">config</span>(<span class="at">locale =</span> <span class="st">'es'</span>) <span class="co"># para mostrar los controles en español</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-2b4e9ca9c8a72b74d1d7" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-2b4e9ca9c8a72b74d1d7">{"x":{"data":[{"x":[70,65,63,72,81,83,66,75,80,75,79,76,76,69,75,74,85,86,71,64,78,80,74,72,77,81,82,80,80,80,87],"y":[10.300000000000001,10.300000000000001,10.199999999999999,16.399999999999999,18.800000000000001,19.699999999999999,15.6,18.199999999999999,22.600000000000001,19.899999999999999,24.199999999999999,21,21.399999999999999,21.300000000000001,19.100000000000001,22.199999999999999,33.799999999999997,27.399999999999999,25.699999999999999,24.899999999999999,34.5,31.699999999999999,36.299999999999997,38.299999999999997,42.600000000000001,55.399999999999999,55.700000000000003,58.299999999999997,51.5,51,77],"text":["Altura del Árbol : 70<br />Volumen del Árbol : 10.3<br />Circunferencia: 8.3","Altura del Árbol : 65<br />Volumen del Árbol : 10.3<br />Circunferencia: 8.6","Altura del Árbol : 63<br />Volumen del Árbol : 10.2<br />Circunferencia: 8.8","Altura del Árbol : 72<br />Volumen del Árbol : 16.4<br />Circunferencia: 10.5","Altura del Árbol : 81<br />Volumen del Árbol : 18.8<br />Circunferencia: 10.7","Altura del Árbol : 83<br />Volumen del Árbol : 19.7<br />Circunferencia: 10.8","Altura del Árbol : 66<br />Volumen del Árbol : 15.6<br />Circunferencia: 11","Altura del Árbol : 75<br />Volumen del Árbol : 18.2<br />Circunferencia: 11","Altura del Árbol : 80<br />Volumen del Árbol : 22.6<br />Circunferencia: 11.1","Altura del Árbol : 75<br />Volumen del Árbol : 19.9<br />Circunferencia: 11.2","Altura del Árbol : 79<br />Volumen del Árbol : 24.2<br />Circunferencia: 11.3","Altura del Árbol : 76<br />Volumen del Árbol : 21<br />Circunferencia: 11.4","Altura del Árbol : 76<br />Volumen del Árbol : 21.4<br />Circunferencia: 11.4","Altura del Árbol : 69<br />Volumen del Árbol : 21.3<br />Circunferencia: 11.7","Altura del Árbol : 75<br />Volumen del Árbol : 19.1<br />Circunferencia: 12","Altura del Árbol : 74<br />Volumen del Árbol : 22.2<br />Circunferencia: 12.9","Altura del Árbol : 85<br />Volumen del Árbol : 33.8<br />Circunferencia: 12.9","Altura del Árbol : 86<br />Volumen del Árbol : 27.4<br />Circunferencia: 13.3","Altura del Árbol : 71<br />Volumen del Árbol : 25.7<br />Circunferencia: 13.7","Altura del Árbol : 64<br />Volumen del Árbol : 24.9<br />Circunferencia: 13.8","Altura del Árbol : 78<br />Volumen del Árbol : 34.5<br />Circunferencia: 14","Altura del Árbol : 80<br />Volumen del Árbol : 31.7<br />Circunferencia: 14.2","Altura del Árbol : 74<br />Volumen del Árbol : 36.3<br />Circunferencia: 14.5","Altura del Árbol : 72<br />Volumen del Árbol : 38.3<br />Circunferencia: 16","Altura del Árbol : 77<br />Volumen del Árbol : 42.6<br />Circunferencia: 16.3","Altura del Árbol : 81<br />Volumen del Árbol : 55.4<br />Circunferencia: 17.3","Altura del Árbol : 82<br />Volumen del Árbol : 55.7<br />Circunferencia: 17.5","Altura del Árbol : 80<br />Volumen del Árbol : 58.3<br />Circunferencia: 17.9","Altura del Árbol : 80<br />Volumen del Árbol : 51.5<br />Circunferencia: 18","Altura del Árbol : 80<br />Volumen del Árbol : 51<br />Circunferencia: 18","Altura del Árbol : 87<br />Volumen del Árbol : 77<br />Circunferencia: 20.6"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":["rgba(19,43,67,1)","rgba(20,46,71,1)","rgba(21,48,73,1)","rgba(30,65,96,1)","rgba(31,67,99,1)","rgba(31,68,100,1)","rgba(32,70,103,1)","rgba(32,70,103,1)","rgba(33,71,104,1)","rgba(33,72,106,1)","rgba(34,73,107,1)","rgba(35,74,108,1)","rgba(35,74,108,1)","rgba(36,77,112,1)","rgba(38,80,117,1)","rgba(42,89,129,1)","rgba(42,89,129,1)","rgba(45,94,135,1)","rgba(47,98,141,1)","rgba(47,99,142,1)","rgba(48,101,145,1)","rgba(49,103,148,1)","rgba(51,107,153,1)","rgba(59,123,175,1)","rgba(61,127,180,1)","rgba(67,138,195,1)","rgba(68,140,198,1)","rgba(70,145,204,1)","rgba(71,146,206,1)","rgba(71,146,206,1)","rgba(86,177,247,1)"],"opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":["rgba(19,43,67,1)","rgba(20,46,71,1)","rgba(21,48,73,1)","rgba(30,65,96,1)","rgba(31,67,99,1)","rgba(31,68,100,1)","rgba(32,70,103,1)","rgba(32,70,103,1)","rgba(33,71,104,1)","rgba(33,72,106,1)","rgba(34,73,107,1)","rgba(35,74,108,1)","rgba(35,74,108,1)","rgba(36,77,112,1)","rgba(38,80,117,1)","rgba(42,89,129,1)","rgba(42,89,129,1)","rgba(45,94,135,1)","rgba(47,98,141,1)","rgba(47,99,142,1)","rgba(48,101,145,1)","rgba(49,103,148,1)","rgba(51,107,153,1)","rgba(59,123,175,1)","rgba(61,127,180,1)","rgba(67,138,195,1)","rgba(68,140,198,1)","rgba(70,145,204,1)","rgba(71,146,206,1)","rgba(71,146,206,1)","rgba(86,177,247,1)"]}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0],"y":[0],"name":"b29fed6a1a2079ca944c32bd4f1c2e58","type":"scatter","mode":"markers","opacity":0,"hoverinfo":"skip","showlegend":false,"marker":{"color":[0,1],"colorscale":[[0,"#132B43"],[0.0033444816053512026,"#132B44"],[0.0066889632107024052,"#132C44"],[0.010033444816053463,"#142C45"],[0.013377926421404665,"#142D45"],[0.016722408026755869,"#142D46"],[0.020066889632107069,"#142D46"],[0.02341137123745813,"#142E47"],[0.026755852842809329,"#152E47"],[0.030100334448160532,"#152F48"],[0.033444816053511739,"#152F48"],[0.036789297658862935,"#152F49"],[0.040133779264213999,"#153049"],[0.043478260869565195,"#16304A"],[0.046822742474916398,"#16304A"],[0.050167224080267601,"#16314B"],[0.053511705685618659,"#16314B"],[0.056856187290969862,"#16324C"],[0.060200668896321065,"#17324D"],[0.063545150501672268,"#17324D"],[0.066889632107023478,"#17334E"],[0.070234113712374535,"#17334E"],[0.073578595317725731,"#17344F"],[0.076923076923076927,"#18344F"],[0.080267558528428137,"#183450"],[0.083612040133779195,"#183550"],[0.086956521739130391,"#183551"],[0.090301003344481601,"#183651"],[0.093645484949832797,"#193652"],[0.096989966555184007,"#193652"],[0.10033444816053506,"#193753"],[0.10367892976588626,"#193754"],[0.10702341137123747,"#193854"],[0.11036789297658867,"#1A3855"],[0.11371237458193972,"#1A3955"],[0.11705685618729093,"#1A3956"],[0.12040133779264213,"#1A3956"],[0.12374581939799334,"#1A3A57"],[0.12709030100334454,"#1B3A57"],[0.13043478260869559,"#1B3B58"],[0.13377926421404679,"#1B3B59"],[0.13712374581939801,"#1B3B59"],[0.14046822742474921,"#1C3C5A"],[0.14381270903010027,"#1C3C5A"],[0.14715719063545146,"#1C3D5B"],[0.15050167224080266,"#1C3D5B"],[0.15384615384615385,"#1C3D5C"],[0.15719063545150508,"#1D3E5C"],[0.16053511705685614,"#1D3E5D"],[0.16387959866220733,"#1D3F5D"],[0.16722408026755853,"#1D3F5E"],[0.17056856187290972,"#1D3F5F"],[0.17391304347826078,"#1E405F"],[0.17725752508361201,"#1E4060"],[0.1806020066889632,"#1E4160"],[0.1839464882943144,"#1E4161"],[0.18729096989966559,"#1E4261"],[0.19063545150501665,"#1F4262"],[0.19397993311036787,"#1F4263"],[0.19732441471571907,"#1F4363"],[0.20066889632107027,"#1F4364"],[0.20401337792642132,"#1F4464"],[0.20735785953177252,"#204465"],[0.21070234113712374,"#204465"],[0.21404682274247494,"#204566"],[0.21739130434782614,"#204566"],[0.22073578595317719,"#214667"],[0.22408026755852839,"#214668"],[0.22742474916387961,"#214768"],[0.23076923076923081,"#214769"],[0.23411371237458187,"#214769"],[0.23745819397993306,"#22486A"],[0.24080267558528426,"#22486A"],[0.24414715719063546,"#22496B"],[0.24749163879598668,"#22496C"],[0.25083612040133774,"#224A6C"],[0.2541806020066889,"#234A6D"],[0.25752508361204013,"#234A6D"],[0.26086956521739135,"#234B6E"],[0.26421404682274241,"#234B6E"],[0.26755852842809358,"#244C6F"],[0.2709030100334448,"#244C70"],[0.27424749163879603,"#244C70"],[0.27759197324414719,"#244D71"],[0.28093645484949825,"#244D71"],[0.28428093645484948,"#254E72"],[0.28762541806020064,"#254E72"],[0.29096989966555187,"#254F73"],[0.29431438127090293,"#254F74"],[0.29765886287625415,"#254F74"],[0.30100334448160532,"#265075"],[0.30434782608695654,"#265075"],[0.30769230769230771,"#265176"],[0.31103678929765882,"#265176"],[0.31438127090300999,"#275277"],[0.31772575250836121,"#275278"],[0.32107023411371227,"#275278"],[0.32441471571906344,"#275379"],[0.32775919732441466,"#275379"],[0.33110367892976589,"#28547A"],[0.33444816053511706,"#28547B"],[0.33779264214046828,"#28557B"],[0.34113712374581945,"#28557C"],[0.34448160535117051,"#28567C"],[0.34782608695652173,"#29567D"],[0.35117056856187279,"#29567D"],[0.35451505016722401,"#29577E"],[0.35785953177257518,"#29577F"],[0.3612040133779264,"#2A587F"],[0.36454849498327763,"#2A5880"],[0.3678929765886288,"#2A5980"],[0.37123745819398002,"#2A5981"],[0.37458193979933108,"#2A5982"],[0.37792642140468224,"#2B5A82"],[0.3812709030100333,"#2B5A83"],[0.38461538461538453,"#2B5B83"],[0.38795986622073575,"#2B5B84"],[0.39130434782608692,"#2C5C85"],[0.39464882943143814,"#2C5C85"],[0.39799331103678931,"#2C5D86"],[0.40133779264214053,"#2C5D86"],[0.40468227424749159,"#2C5D87"],[0.40802675585284282,"#2D5E87"],[0.41137123745819387,"#2D5E88"],[0.41471571906354504,"#2D5F89"],[0.41806020066889626,"#2D5F89"],[0.42140468227424749,"#2E608A"],[0.42474916387959866,"#2E608A"],[0.42809364548494988,"#2E618B"],[0.43143812709030105,"#2E618C"],[0.43478260869565211,"#2E618C"],[0.43812709030100333,"#2F628D"],[0.44147157190635439,"#2F628D"],[0.44481605351170561,"#2F638E"],[0.44816053511705678,"#2F638F"],[0.451505016722408,"#30648F"],[0.45484949832775923,"#306490"],[0.4581939799331104,"#306590"],[0.46153846153846162,"#306591"],[0.46488294314381268,"#306592"],[0.46822742474916385,"#316692"],[0.4715719063545149,"#316693"],[0.47491638795986613,"#316793"],[0.47826086956521735,"#316794"],[0.48160535117056852,"#326895"],[0.48494983277591974,"#326895"],[0.48829431438127091,"#326996"],[0.49163879598662213,"#326996"],[0.49498327759197319,"#326997"],[0.49832775919732442,"#336A98"],[0.50167224080267547,"#336A98"],[0.50501672240802664,"#336B99"],[0.50836120401337781,"#336B99"],[0.51170568561872909,"#346C9A"],[0.51505016722408026,"#346C9B"],[0.51839464882943143,"#346D9B"],[0.52173913043478271,"#346D9C"],[0.52508361204013376,"#346E9D"],[0.52842809364548493,"#356E9D"],[0.53177257525083599,"#356E9E"],[0.53511705685618716,"#356F9E"],[0.53846153846153844,"#356F9F"],[0.5418060200668896,"#3670A0"],[0.54515050167224077,"#3670A0"],[0.54849498327759205,"#3671A1"],[0.55183946488294322,"#3671A1"],[0.55518394648829428,"#3772A2"],[0.55852842809364545,"#3772A3"],[0.5618729096989965,"#3773A3"],[0.56521739130434767,"#3773A4"],[0.56856187290969895,"#3773A4"],[0.57190635451505012,"#3874A5"],[0.57525083612040129,"#3874A6"],[0.57859531772575257,"#3875A6"],[0.58193979933110374,"#3875A7"],[0.58528428093645479,"#3976A8"],[0.58862876254180596,"#3976A8"],[0.59197324414715702,"#3977A9"],[0.5953177257525083,"#3977A9"],[0.59866220735785947,"#3978AA"],[0.60200668896321063,"#3A78AB"],[0.60535117056856191,"#3A79AB"],[0.60869565217391308,"#3A79AC"],[0.61204013377926425,"#3A79AC"],[0.61538461538461531,"#3B7AAD"],[0.61872909698996648,"#3B7AAE"],[0.62207357859531764,"#3B7BAE"],[0.62541806020066881,"#3B7BAF"],[0.62876254180601998,"#3C7CB0"],[0.63210702341137115,"#3C7CB0"],[0.63545150501672243,"#3C7DB1"],[0.6387959866220736,"#3C7DB1"],[0.64214046822742477,"#3C7EB2"],[0.64548494983277604,"#3D7EB3"],[0.64882943143812721,"#3D7FB3"],[0.65217391304347838,"#3D7FB4"],[0.65551839464882933,"#3D7FB5"],[0.6588628762541805,"#3E80B5"],[0.66220735785953178,"#3E80B6"],[0.66555183946488294,"#3E81B6"],[0.66889632107023389,"#3E81B7"],[0.67224080267558506,"#3F82B8"],[0.67558528428093623,"#3F82B8"],[0.67892976588628751,"#3F83B9"],[0.68227424749163867,"#3F83BA"],[0.68561872909698984,"#4084BA"],[0.68896321070234101,"#4084BB"],[0.69230769230769229,"#4085BB"],[0.69565217391304346,"#4085BC"],[0.69899665551839463,"#4086BD"],[0.70234113712374591,"#4186BD"],[0.70568561872909707,"#4186BE"],[0.70903010033444824,"#4187BF"],[0.71237458193979952,"#4187BF"],[0.71571906354515036,"#4288C0"],[0.71906354515050164,"#4288C1"],[0.72240802675585281,"#4289C1"],[0.72575250836120397,"#4289C2"],[0.72909698996655492,"#438AC2"],[0.73244147157190609,"#438AC3"],[0.73578595317725737,"#438BC4"],[0.73913043478260854,"#438BC4"],[0.7424749163879597,"#438CC5"],[0.74581939799331087,"#448CC6"],[0.74916387959866215,"#448DC6"],[0.75250836120401332,"#448DC7"],[0.75585284280936449,"#448EC8"],[0.75919732441471577,"#458EC8"],[0.76254180602006694,"#458FC9"],[0.76588628762541811,"#458FC9"],[0.76923076923076938,"#458FCA"],[0.77257525083612055,"#4690CB"],[0.7759197324414715,"#4690CB"],[0.77926421404682267,"#4691CC"],[0.78260869565217384,"#4691CD"],[0.78595317725752512,"#4792CD"],[0.78929765886287595,"#4792CE"],[0.79264214046822723,"#4793CF"],[0.7959866220735784,"#4793CF"],[0.79933110367892957,"#4894D0"],[0.80267558528428073,"#4894D0"],[0.80602006688963201,"#4895D1"],[0.80936454849498318,"#4895D2"],[0.81270903010033435,"#4896D2"],[0.81605351170568563,"#4996D3"],[0.8193979933110368,"#4997D4"],[0.82274247491638797,"#4997D4"],[0.82608695652173925,"#4998D5"],[0.82943143812709041,"#4A98D6"],[0.83277591973244158,"#4A99D6"],[0.83612040133779253,"#4A99D7"],[0.8394648829431437,"#4A9AD8"],[0.84280936454849498,"#4B9AD8"],[0.84615384615384615,"#4B9BD9"],[0.84949832775919709,"#4B9BDA"],[0.85284280936454826,"#4B9BDA"],[0.85618729096989943,"#4C9CDB"],[0.85953177257525071,"#4C9CDB"],[0.86287625418060188,"#4C9DDC"],[0.86622073578595304,"#4C9DDD"],[0.86956521739130421,"#4D9EDD"],[0.87290969899665549,"#4D9EDE"],[0.87625418060200666,"#4D9FDF"],[0.87959866220735783,"#4D9FDF"],[0.88294314381270911,"#4DA0E0"],[0.88628762541806028,"#4EA0E1"],[0.88963210702341144,"#4EA1E1"],[0.89297658862876272,"#4EA1E2"],[0.89632107023411356,"#4EA2E3"],[0.89966555183946484,"#4FA2E3"],[0.90301003344481601,"#4FA3E4"],[0.90635451505016718,"#4FA3E5"],[0.90969899665551812,"#4FA4E5"],[0.91304347826086929,"#50A4E6"],[0.91638795986622057,"#50A5E7"],[0.91973244147157174,"#50A5E7"],[0.92307692307692291,"#50A6E8"],[0.92642140468227407,"#51A6E8"],[0.92976588628762535,"#51A7E9"],[0.93311036789297652,"#51A7EA"],[0.93645484949832769,"#51A8EA"],[0.93979933110367897,"#52A8EB"],[0.94314381270903014,"#52A9EC"],[0.94648829431438131,"#52A9EC"],[0.94983277591973259,"#52AAED"],[0.95317725752508375,"#53AAEE"],[0.9565217391304347,"#53ABEE"],[0.95986622073578587,"#53ABEF"],[0.96321070234113704,"#53ACF0"],[0.96655518394648832,"#54ACF0"],[0.96989966555183915,"#54ADF1"],[0.97324414715719043,"#54ADF2"],[0.9765886287625416,"#54AEF2"],[0.97993311036789277,"#55AEF3"],[0.98327759197324394,"#55AFF4"],[0.98662207357859522,"#55AFF4"],[0.98996655518394638,"#55B0F5"],[0.99331103678929755,"#56B0F6"],[0.99665551839464883,"#56B1F6"],[1,"#56B1F7"]],"colorbar":{"bgcolor":"transparent","bordercolor":"transparent","borderwidth":1.8897637795275593,"thickness":23.039999999999996,"title":"Altura estimada","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"tickmode":"array","ticktext":["9","12","15","18"],"tickvals":[0.058387533875338689,0.30147696476964758,0.54456639566395659,0.78765582655826538],"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":18.264840182648406},"ticklen":2,"len":0.5}},"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":53.858032378580326,"r":13.283520132835205,"b":38.522208385222093,"l":35.865504358655052},"plot_bgcolor":"transparent","paper_bgcolor":"rgba(213,228,235,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"<b> Relación entre altura y volumen de los árboles <\/b>","font":{"color":"rgba(0,0,0,1)","family":"","size":21.917808219178081},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.3500000000000005,91.349999999999994],"tickmode":"array","ticktext":["0","25","50","75"],"tickvals":[0,25,50,75],"categoryorder":"array","categoryarray":["0","25","50","75"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":-6.6417600664175991,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.53134080531340799,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"Altura del Árbol","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-3.8500000000000001,80.849999999999994],"tickmode":"array","ticktext":["0","20","40","60","80"],"tickvals":[0,20,39.999999999999993,59.999999999999993,80],"categoryorder":"array","categoryarray":["0","20","40","60","80"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":-6.6417600664176026,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":1.16230801162308,"zeroline":false,"anchor":"x","title":{"text":"Volumen del Árbol","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"transparent","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":18.264840182648406},"title":{"text":"Altura estimada","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"locale":"es"},"source":"A","attrs":{"2f043f5269a3":{"x":{},"y":{},"colour":{},"text":{},"type":"scatter"}},"cur_data":"2f043f5269a3","visdat":{"2f043f5269a3":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+<section id="gráfico-de-barras-del-conjunto-de-datos-mtcars" class="level2">
+<h2 class="anchored" data-anchor-id="gráfico-de-barras-del-conjunto-de-datos-mtcars">Gráfico de barras del conjunto de datos mtcars</h2>
+<section id="cantidad-de-vehículos-con-el-tipo-de-motor-en-v-o-líneal" class="level4">
+<h4 class="anchored" data-anchor-id="cantidad-de-vehículos-con-el-tipo-de-motor-en-v-o-líneal">Cantidad de vehículos con el tipo de motor en V o líneal</h4>
+<p>Para este gráfico se utilizo la base de datos “mtcars”. Esta base de datos tiene 32 filas/observaciones y 11 columnas/variables, la misma presenta el consumo de combustible de los vehículos estudiados (población) y 10 aspectos del diseño y rendimiento de 32 automóviles, modelos 1973-1974.</p>
+<p>Para el ploteo de este gráfico se utilizó la variable de tipo de motor que se categoriza en dos factores, motor de tipo en forma de V, que se relaciona la disposición de los cilindros que se agrupan en dos bloques o filas de cilindros, colocados de manera que forman una letra “V”, en el caso del motor en línea los cilindros se disponen consecutivamente.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Se procede a generar la variable "Tipo_motor" la transmisión del vehículo</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>mtcars <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vs =</span> <span class="fu">ifelse</span>(am <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"motor en v"</span>, <span class="st">"motor en línea"</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear el gráfico de barras</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>Tipo_motor_plot <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_rev</span>(<span class="fu">fct_infreq</span>(vs)), <span class="at">fill =</span> vs)) <span class="sc">+</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">text =</span> <span class="fu">paste0</span>(</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Número de vehículos: "</span>, <span class="fu">after_stat</span>(count)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"motor en v"</span> <span class="ot">=</span> <span class="st">"#0ca3b4"</span>, <span class="st">"motor en línea"</span> <span class="ot">=</span> <span class="st">"#f76ccf"</span>)) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Vehículos por tipo de motor"</span>) <span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Tipo de motor"</span>) <span class="sc">+</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Número de vehículos"</span>) <span class="sc">+</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">"Fuente: mtcars dataset"</span>) <span class="sc">+</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Tipo de Motor"</span>) <span class="sc">+</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>()) </span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir a gráfico interactivo con plotly</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>Grafico_interactivo_tipo_motor <span class="ot">&lt;-</span> <span class="fu">ggplotly</span>(Tipo_motor_plot, <span class="at">tooltip =</span> <span class="st">"text"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">config</span>(<span class="at">locale =</span> <span class="st">'es'</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>Grafico_interactivo_tipo_motor</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-be7c541e3342f8fa5826" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-be7c541e3342f8fa5826">{"x":{"data":[{"orientation":"v","width":0.89999999999999991,"base":0,"x":[1],"y":[13],"text":"Número de vehículos: 13","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(247,108,207,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"motor en línea","legendgroup":"motor en línea","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.90000000000000013,"base":0,"x":[2],"y":[19],"text":"Número de vehículos: 19","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(12,163,180,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"motor en v","legendgroup":"motor en v","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.762557077625573,"r":7.3059360730593621,"b":40.182648401826491,"l":37.260273972602747},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Vehículos por tipo de motor","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,2.6000000000000001],"tickmode":"array","ticktext":["motor en línea","motor en v"],"tickvals":[1,2],"categoryorder":"array","categoryarray":["motor en línea","motor en v"],"nticks":null,"ticks":"outside","tickcolor":"rgba(179,179,179,1)","ticklen":3.6529680365296811,"tickwidth":0.33208800332088001,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(222,222,222,1)","gridwidth":0.33208800332088001,"zeroline":false,"anchor":"y","title":{"text":"Tipo de motor","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.95000000000000007,19.949999999999999],"tickmode":"array","ticktext":["0","5","10","15"],"tickvals":[0,5,10,15],"categoryorder":"array","categoryarray":["0","5","10","15"],"nticks":null,"ticks":"outside","tickcolor":"rgba(179,179,179,1)","ticklen":3.6529680365296811,"tickwidth":0.33208800332088001,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(222,222,222,1)","gridwidth":0.33208800332088001,"zeroline":false,"anchor":"x","title":{"text":"Número de vehículos","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(179,179,179,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Tipo de Motor","font":{"color":null,"family":null,"size":0}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"locale":"es"},"source":"A","attrs":{"2f042c0da9b":{"x":{},"fill":{},"text":{},"type":"bar"}},"cur_data":"2f042c0da9b","visdat":{"2f042c0da9b":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Podemos denotar en los datos del gráfico, que hay una mayor proporción de vehículos con motor tipo en V que motores en línea. Se puede observar que la cantidad de vehículos con motor tipo V son 18 y en línea 14.</p>
+</section>
+</section>
+<section id="gráfico-de-pastel" class="level2">
+<h2 class="anchored" data-anchor-id="gráfico-de-pastel">Gráfico de pastel</h2>
+<section id="gráfico-según-el-tipo-de-motor-datos-de-mtcars" class="level3">
+<h3 class="anchored" data-anchor-id="gráfico-según-el-tipo-de-motor-datos-de-mtcars">Gráfico según el tipo de motor; datos de mtcars</h3>
+<p>Igualmente con la base de datos mtcars y utilizando la variable categórica de tipo de motor (motor tipo manual y motor tipo automático), se presenta el siguiente gráfico de pastel, donde al contrario del gráfico de barras este si nos muestra el número de la distribución de vehículos según su categoría de motor.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear la variable Tipo_motor en función de la transmisión</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Tipo_motor =</span> <span class="fu">ifelse</span>(am <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"Automático"</span>, <span class="st">"Manual"</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Ahora se debe agrupar y resumir los datos contando los vehículos por tipo de motor</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>conteo_vehiculos_por_tipo <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Tipo_motor) <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Vehiculos =</span> <span class="fu">n</span>())</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Se calcula los porcentajes para poder tenerlo en % y gráficar</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>porcentaje_vehiculos_por_tipo <span class="ot">&lt;-</span> conteo_vehiculos_por_tipo <span class="sc">|&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Porcentaje =</span> <span class="fu">round</span>(Total_Vehiculos <span class="sc">/</span> <span class="fu">sum</span>(Total_Vehiculos) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>))</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Generación del gráfico de pastel</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>grafico_pastel_ggplot2 <span class="ot">&lt;-</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  porcentaje_vehiculos_por_tipo <span class="sc">|&gt;</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> Total_Vehiculos, <span class="at">fill =</span> Tipo_motor)) <span class="sc">+</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>, <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="at">theta =</span> <span class="st">"y"</span>) <span class="sc">+</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(Porcentaje, <span class="st">"%"</span>)),</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"#ffffff"</span>,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> <span class="fl">0.6</span>) <span class="co"># para ajustar la posición del texto en cada porción</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribución de vehículos por tipo de motor"</span>,</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Tipo de motor"</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Despliegue del gráfico</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>grafico_pastel_ggplot2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/Grafico_Pastel-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="histograma-de-cantidad-de-sismos-por-magnitud" class="level2">
+<h2 class="anchored" data-anchor-id="histograma-de-cantidad-de-sismos-por-magnitud">Histograma de cantidad de sismos por magnitud</h2>
+<section id="datos-correpondientes-a-locations-of-earthquakes-off-fiji" class="level3">
+<h3 class="anchored" data-anchor-id="datos-correpondientes-a-locations-of-earthquakes-off-fiji">Datos correpondientes a “Locations of Earthquakes off Fiji”</h3>
+<p>Para desarrollar el histograma se procedió a utilizar la base de datos “quakes” que es una base de datos de ubicación de los terremotos en Fiji que proporciona la ubicación de 1000 eventos sísmicos de Magnitud &gt; 4,0. Los eventos ocurrieron en un cubo cerca de Fiji desde 1964.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear el histograma con los datos de quakes</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>histograma_ggplot2 <span class="ot">&lt;-</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  quakes <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mag)) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">text =</span> <span class="fu">paste0</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Magnitud (valor medio del rango): "</span>, <span class="fu">round</span>(<span class="fu">after_stat</span>(x), <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Frecuencia: "</span>, <span class="fu">after_stat</span>(count)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    ), </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">10</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Distribución de la magnitud de los terremotos"</span>) <span class="sc">+</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Magnitud del terremoto"</span>) <span class="sc">+</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Frecuencia"</span>) <span class="sc">+</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Datos de terremotos en el dataset 'quakes'"</span>, <span class="at">caption =</span> <span class="st">"Fuente: 'quakes' dataset"</span>) <span class="sc">+</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Histograma interactivo con plotly</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(histograma_ggplot2, <span class="at">tooltip =</span> <span class="st">"text"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">config</span>(<span class="at">locale =</span> <span class="st">'es'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-c0a383df994ae47bb610" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-c0a383df994ae47bb610">{"x":{"data":[{"orientation":"v","width":[0.2666666666666675,0.26666666666666572,0.26666666666666572,0.26666666666666572,0.26666666666666572,0.26666666666666572,0.26666666666666572,0.2666666666666675,0.26666666666666572,0.2666666666666675],"base":[0,0,0,0,0,0,0,0,0,0],"x":[4.0000000000000009,4.2666666666666675,4.533333333333335,4.8000000000000007,5.0666666666666682,5.3333333333333339,5.6000000000000014,5.866666666666668,6.1333333333333346,6.4000000000000012],"y":[101,276,208,217,119,41,31,5,1,1],"text":["Magnitud (valor medio del rango): 4<br />Frecuencia: 101","Magnitud (valor medio del rango): 4.27<br />Frecuencia: 276","Magnitud (valor medio del rango): 4.53<br />Frecuencia: 208","Magnitud (valor medio del rango): 4.8<br />Frecuencia: 217","Magnitud (valor medio del rango): 5.07<br />Frecuencia: 119","Magnitud (valor medio del rango): 5.33<br />Frecuencia: 41","Magnitud (valor medio del rango): 5.6<br />Frecuencia: 31","Magnitud (valor medio del rango): 5.87<br />Frecuencia: 5","Magnitud (valor medio del rango): 6.13<br />Frecuencia: 1","Magnitud (valor medio del rango): 6.4<br />Frecuencia: 1"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(89,89,89,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.762557077625573,"r":7.3059360730593621,"b":40.182648401826491,"l":43.105022831050235},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Distribución de la magnitud de los terremotos","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[3.7333333333333338,6.6666666666666687],"tickmode":"array","ticktext":["4","5","6"],"tickvals":[4,5,6],"categoryorder":"array","categoryarray":["4","5","6"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176002,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"Magnitud del terremoto","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-13.800000000000001,289.80000000000001],"tickmode":"array","ticktext":["0","100","200"],"tickvals":[0,100,200],"categoryorder":"array","categoryarray":["0","100","200"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176002,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"Frecuencia","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"locale":"es"},"source":"A","attrs":{"2f0434f2683d":{"x":{},"text":{},"type":"bar"}},"cur_data":"2f0434f2683d","visdat":{"2f0434f2683d":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>En principio el histograma nos da una visión clara de la distribución, tendencias, y patrones en un conjunto de datos, para este caso vemos que hay una distribución de los datos de manera asimétrica con una tendencia de acumulación hacia la izquierda, lo cual nos dice que la mayor cantidad de sismos están concentrados entre la magnitud de 4 a 5 grados, a su vez, se tiene una cantidad muy baja en la magnitud de 6.5 grados.</p>
+</section>
+<section id="la-importancia-de-los-gráficos" class="level3">
+<h3 class="anchored" data-anchor-id="la-importancia-de-los-gráficos">La importancia de los gráficos</h3>
+<blockquote class="blockquote">
+<p><em>Es una herramienta muy eficaz, ya que un buen gráfico: capta la atención del lector; • presenta la información de forma sencilla, clara y precisa; • no induce a error; • facilita la comparación de datos y destaca las tendencias y las diferencias; • ilustra el mensaje, tema o trama del texto al que acompaña.</em></p>
+</blockquote>
+<p>(INE, 2024)</p>
+</section>
+</section>
+<section id="referencias" class="level2">
+<h2 class="anchored" data-anchor-id="referencias">Referencias</h2>
+<ul>
+<li>Instituto Nacional de Estadística (INE). España.(2024). <em>Los tipos de gráficos estadísticos</em>. <a href="https://www.ine.es/explica/docs/pasos_tipos_graficos.pdf">https://www.ine.es/explica/docs/pasos_tipos_graficos.pdf</a></li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
